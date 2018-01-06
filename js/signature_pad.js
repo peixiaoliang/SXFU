@@ -115,8 +115,8 @@ function SignaturePad(canvas, options) {
   var opts = options || {};
 
   this.velocityFilterWeight = opts.velocityFilterWeight || 0.7;
-  this.minWidth = opts.minWidth || 0.5;
-  this.maxWidth = opts.maxWidth || 12.5;
+  this.minWidth = opts.minWidth || 3;
+  this.maxWidth = opts.maxWidth || 8;
   this.throttle = 'throttle' in opts ? opts.throttle : 16; // in miliseconds
   this.minDistance = 'minDistance' in opts ? opts.minDistance : 5;
 
@@ -127,7 +127,7 @@ function SignaturePad(canvas, options) {
   }
 
   this.dotSize = opts.dotSize || function () {
-    return (this.minWidth + this.maxWidth) / 2;
+    return (this.minWidth + this.maxWidth) / 11;
   };
   this.penColor = opts.penColor || 'black';
   this.backgroundColor = opts.backgroundColor || 'rgba(0,0,0,0)';
