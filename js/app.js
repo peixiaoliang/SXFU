@@ -96,13 +96,13 @@ undoButton.addEventListener("click", function (event) {
   signaturePad.penColor = color;
 });*/
 changeColorButtonRed.addEventListener("click", function (event) {
-  signaturePad.penColor = red;
+  signaturePad.penColor = 'red';
 });
 changeColorButtonYellow.addEventListener("click", function (event) {
-  signaturePad.penColor = yellow;
+  signaturePad.penColor = 'yellow';
 });
 changeColorButtonBlue.addEventListener("click", function (event) {
-  signaturePad.penColor = blue;
+  signaturePad.penColor = 'blue';
 });
 savePNGButton.addEventListener("click", function (event) {
   if (signaturePad.isEmpty()) {
