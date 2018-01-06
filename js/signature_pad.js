@@ -114,7 +114,7 @@ function SignaturePad(canvas, options) {
   var self = this;
   var opts = options || {};
 
-  this.velocityFilterWeight = opts.velocityFilterWeight || 0.7;
+  this.velocityFilterWeight = opts.velocityFilterWeight || 0.3;
   this.minWidth = opts.minWidth || 3;
   this.maxWidth = opts.maxWidth || 8;
   this.throttle = 'throttle' in opts ? opts.throttle : 16; // in miliseconds
