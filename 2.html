@@ -135,12 +135,14 @@ h1 {
 <h1>手写毛笔字效果-手机版</h1>  
 <canvas id="canvasId" width="400" height="400"></canvas><br />  
 <input type="button" value="全部清除" class="button" onclick="hw.clear();" />  
-<input type="button" value="清除最后一笔" class="button" onclick="hw.historyBack();" />  
+<input type="button" value="清除最后一笔" class="button" onclick="hw.historyBack();" /> 
+<input type="button" value="保存" class="button" onclick="hw.save();" /> 
 <script type="text/javascript">  
 function Handwriting(id) {  
     this.canvas = document.getElementById(id);  
     this.ctx = this.canvas.getContext("2d");  
     this.ctx.fillStyle = "rgba(0,0,0,0.25)";  
+    // this.ctx.fillStyle = "red";  
     this.canvas.addEventListener("touchstart", this.downEvent.bind(this), false);  
     this.canvas.addEventListener("touchmove", this.moveEvent.bind(this), false);  
     this.canvas.addEventListener("touchend", this.upEvent.bind(this), false);  
@@ -165,7 +167,10 @@ Handwriting.prototype.clear = function () {
     this.history = [];  
     this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);  
 }  
-  
+Handwriting.prototype.save = function () {  
+        var a=this.canvas.toDataURL();
+        location.href=a.replace('image/jpg' ,'image/octet-stream')
+}  
 Handwriting.prototype.historyBack = function () {  
     this.history.pop();  
     this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);  
