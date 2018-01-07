@@ -480,7 +480,8 @@ SignaturePad.prototype._drawCurve = function (curve, startWidth, endWidth) {
     y += ttt * curve.endPoint.y;
 
     var width = startWidth + ttt * widthDelta;
-    this._drawPoint(x, y, width);
+    // this._drawPoint(x, y, width);
+     this._drawPoints(x, y, width,width+10,width);
   }
 
   ctx.closePath();
@@ -492,7 +493,7 @@ SignaturePad.prototype._drawDot = function (point) {
   var width = typeof this.dotSize === 'function' ? this.dotSize() : this.dotSize;
 
   ctx.beginPath();
-  this._drawPoints(point.x, point.y, width,width+20,width);
+  this._drawPoints(point.x, point.y, width,width+10,width);
   ctx.closePath();
   ctx.fill();
 };
