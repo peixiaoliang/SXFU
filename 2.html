@@ -137,12 +137,15 @@ h1 {
 <input type="button" value="全部清除" class="button" onclick="hw.clear();" />  
 <input type="button" value="清除最后一笔" class="button" onclick="hw.historyBack();" /> 
 <input type="button" value="保存" class="button" onclick="hw.save();" /> 
+<input type="button" value="红色" class="button" onclick="hw.red();" /> 
+<input type="button" value="蓝色" class="button" onclick="hw.blue();" /> 
 <script type="text/javascript">  
-function Handwriting(id) {  
+function Handwriting(id,options) {
+     var opts = options || {};
     this.canvas = document.getElementById(id);  
     this.ctx = this.canvas.getContext("2d");  
-    this.ctx.fillStyle = "rgba(0,0,0,0.25)";  
-    // this.ctx.fillStyle = "red";  
+    // this.ctx.fillStyle = "rgba(0,0,0,0.25)";  
+    this.ctx.fillStyle =this.penColor;  
     this.canvas.addEventListener("touchstart", this.downEvent.bind(this), false);  
     this.canvas.addEventListener("touchmove", this.moveEvent.bind(this), false);  
     this.canvas.addEventListener("touchend", this.upEvent.bind(this), false);  
@@ -151,7 +154,8 @@ function Handwriting(id) {
     //this.canvas.onmousemove = this.moveEvent.bind(this);  
     //this.canvas.onmouseup = this.upEvent.bind(this);  
     //this.canvas.onmouseout = this.upEvent.bind(this);  
-    this.moveFlag = false;  
+    this.moveFlag = false;
+    this.penColor = opts.penColor || 'black';  
     this.upof = {};  
     this.radius = 0;  
     this.has = [];  
@@ -168,9 +172,44 @@ Handwriting.prototype.clear = function () {
     this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);  
 }  
 Handwriting.prototype.save = function () {  
-        var a=this.canvas.toDataURL();
-        location.href=a.replace('image/jpg' ,'image/octet-stream')
-}  
+        var dataURL=this.canvas.toDataURL("image/jpeg");
+        // location.href=a.replace('image/jpg' ,'image/octet-stream')
+        download(dataURL, "signature.jpg");
+}
+Handwriting.prototype.red = function () {  
+      this.ctx.fillStyle = 'red';
+}
+Handwriting.prototype.blue = function () {  
+       this.ctx.fillStyle = 'blue';
+}
+function download(dataURL, filename) {
+  var blob = dataURLToBlob(dataURL);
+  var url = window.URL.createObjectURL(blob);
+
+  var a = document.createElement("a");
+  a.style = "display: none";
+  a.href = url;
+  a.download = filename;
+
+  document.body.appendChild(a);
+  a.click();
+
+  window.URL.revokeObjectURL(url);
+}
+function dataURLToBlob(dataURL) {
+  // Code taken from https://github.com/ebidel/filer.js
+  var parts = dataURL.split(';base64,');
+  var contentType = parts[0].split(":")[1];
+  var raw = window.atob(parts[1]);
+  var rawLength = raw.length;
+  var uInt8Array = new Uint8Array(rawLength);
+
+  for (var i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i);
+  }
+
+  return new Blob([uInt8Array], { type: contentType });
+}
 Handwriting.prototype.historyBack = function () {  
     this.history.pop();  
     this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);  
@@ -250,7 +289,7 @@ Handwriting.prototype.distance = function (a,b) {
     return Math.sqrt(x*x+y*y);  
 }  
   
-var hw = new Handwriting("canvasId");  
+var hw = new Handwriting("canvasId",'rgba(0,0,0,0.25)');  
 hw.lineMax = 40;  
 hw.lineMin = 5;  
 hw.linePressure = 3.1;  
