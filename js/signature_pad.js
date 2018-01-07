@@ -116,7 +116,7 @@ function SignaturePad(canvas, options) {
 
   this.velocityFilterWeight = opts.velocityFilterWeight || 0.3;
   this.minWidth = opts.minWidth || 3;
-  this.maxWidth = opts.maxWidth || 14;
+  this.maxWidth = opts.maxWidth || 12;
   this.throttle = 'throttle' in opts ? opts.throttle : 16; // in miliseconds
   this.minDistance = 'minDistance' in opts ? opts.minDistance : 5;
 
@@ -492,7 +492,7 @@ SignaturePad.prototype._drawDot = function (point) {
   var width = typeof this.dotSize === 'function' ? this.dotSize() : this.dotSize;
 
   ctx.beginPath();
-  this._drawPoints(point.x, point.y, width,width+2,width);
+  this._drawPoints(point.x, point.y, width,width+20,width);
   ctx.closePath();
   ctx.fill();
 };
