@@ -114,10 +114,10 @@ function SignaturePad(canvas, options) {
   var self = this;
   var opts = options || {};
 
-  this.velocityFilterWeight = opts.velocityFilterWeight || 0.3;
-  this.minWidth = opts.minWidth || 3;
+  this.velocityFilterWeight = opts.velocityFilterWeight || 0.5;
+  this.minWidth = opts.minWidth || 1;
   this.maxWidth = opts.maxWidth || 12;
-  this.throttle = 'throttle' in opts ? opts.throttle : 16; // in miliseconds
+  this.throttle = 'throttle' in opts ? opts.throttle : 10; // in miliseconds
   this.minDistance = 'minDistance' in opts ? opts.minDistance : 5;
 
   if (this.throttle) {
@@ -127,7 +127,7 @@ function SignaturePad(canvas, options) {
   }
 
   this.dotSize = opts.dotSize || function () {
-    return (this.minWidth + this.maxWidth) / 2;
+    return (this.minWidth + this.maxWidth) / 5;
   };
   this.penColor = opts.penColor || 'black';
   this.backgroundColor = opts.backgroundColor || 'rgba(0,0,0,0)';
@@ -349,7 +349,7 @@ SignaturePad.prototype._handleTouchEvents = function () {
 SignaturePad.prototype._reset = function () {
   this.points = [];
   this._lastVelocity = 0;
-  this._lastWidth = (this.minWidth + this.maxWidth) / 2;
+  this._lastWidth = (this.minWidth + this.maxWidth) / 200;
   this._ctx.fillStyle = this.penColor;
 };
 
@@ -457,7 +457,6 @@ SignaturePad.prototype._drawCurve = function (curve, startWidth, endWidth) {
   var ctx = this._ctx;
   var widthDelta = endWidth - startWidth;
   var drawSteps = Math.floor(curve.length());
-
   ctx.beginPath();
 
   for (var i = 0; i < drawSteps; i += 1) {
@@ -481,7 +480,7 @@ SignaturePad.prototype._drawCurve = function (curve, startWidth, endWidth) {
 
     var width = startWidth + ttt * widthDelta;
     // this._drawPoint(x, y, width);
-     this._drawPoints(x, y, width,width+10,width);
+    this._drawPoints(x, y, width,width,width);
   }
 
   ctx.closePath();
@@ -493,7 +492,7 @@ SignaturePad.prototype._drawDot = function (point) {
   var width = typeof this.dotSize === 'function' ? this.dotSize() : this.dotSize;
 
   ctx.beginPath();
-  this._drawPoints(point.x, point.y, width,width+10,width);
+  this._drawPoints(point.x, point.y, width,width,width);
   ctx.closePath();
   ctx.fill();
 };
