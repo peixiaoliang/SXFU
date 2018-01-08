@@ -127,7 +127,7 @@ function SignaturePad(canvas, options) {
   }
 
   this.dotSize = opts.dotSize || function () {
-    return (this.minWidth + this.maxWidth) / 5;
+    return (this.minWidth + this.maxWidth) / 2;
   };
   this.penColor = opts.penColor || 'black';
   this.backgroundColor = opts.backgroundColor || 'rgba(0,0,0,0)';
